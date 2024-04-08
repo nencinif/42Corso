@@ -6,60 +6,88 @@
 /*   By: fabnenci <fabnenci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 17:36:06 by fabnenci          #+#    #+#             */
-/*   Updated: 2024/03/20 17:56:19 by fabnenci         ###   ########.fr       */
+/*   Updated: 2024/04/08 16:34:36 by fabnenci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include "libft/libft.h"
+#include <unistd.h>
+#include <stdio.h>
+#include <limits.h>
+#include <stdarg.h>
+#include <stdint.h>
+
+static int	check_format(char c, va_list list)
+{
+	int	ccount;
+
+	ccount = 0;
+	if (c == '%')
+		ccount = ft_putchar('%');
+	else if (c == 'c')
+		ccount = ft_putchar(va_arg(list, int));
+	else if (c == 'i' || c == 'd')
+		ccount = ft_putnbr(va_arg(list, int));
+	else if (c == 's')
+		ccount = ft_putstr(va_arg(list, char *));
+	else if (c == 'u')
+		ccount = ft_putnbr_base(va_arg(list, unsigned int), BASE10);
+	else if (c == 'p')
+		ccount = ft_putptr(va_arg(list, uintptr_t));
+	else if (c == 'x')
+		ccount = ft_putnbr_base(va_arg(list, unsigned int), BASE16);
+	else if (c == 'X')
+		ccount = ft_putnbr_base(va_arg(list, unsigned int), BASE16CAPS);
+	return (ccount);
+}
 
 int	ft_printf(const char *format, ...)
 {
-	int		lenght;
+	int		result;
 	int		i;
-	va_list	arg;
+	va_list	arg_list;
 
+	va_start(arg_list, format);
 	i = 0;
-	if (!format)
-		return (0);
-	va_start(arg, format);
+	result = 0;
 	while (format[i])
 	{
-		if (format[i] != '%')
-		{
-			write (1, &format[i], 1);
-		}
+		if (format[i] == '%')
+			result = result + check_format(format[++i], arg_list);
 		else
-		{
-			i++;
-			if (format[i] == 's')
-				lenght += ft_putstrcount_fd (va_arg (arg, char *), 1);
-			else if (format[i] == 'd' | format[i] == 'i')
-				lenght += ft_putnbr_fd (va_arg (arg, int), 1);
-			else if (format[i] == 'c')
-				ft_putchar_fd (va_arg (arg, int), 1);
-			else if (format[i] == '%')
-				write (1, '%', 1);
-		}
+			result = result + write(1, &format[i], 1);
 		i++;
 	}
-	return (lenght);
+	va_end(arg_list);
+	return (result);
 }
 
-int main()
-{
-	// ft_printf("Io sono un carattere %c\n", 'D');
-	// ft_printf("Io sono un carattere %c\n", 'D');
-	ft_putnbr_fd(ft_printf("Io sono una stringa %s %s\n", "banana", "bananona") , 1);
-	// ft_printf("Io sono un integer %i\n", 0);
-	// ft_printf("Io sono un integer negativo %i\n", -213);
-	// ft_printf("Io sono un carattere %i\n", 213);
-	// ft_printf("Io sono un carattere %i\n", 0);
-	// ft_printf("Io sono un carattere %i\n", 0);
-	// ft_printf("Io sono un carattere %d\n", 12);
-	// ft_printf("Io sono un carattere %x\n", 100);
-	// ft_printf("Io sono un carattere %X\n", 0);
-	// ft_printf("Io sono un carattere %%\n", 0);
-	// ft_printf("Io sono un carattere %p\n", 3);
-}
+// int main()
+// {
+// 	int	saluti;
+// 	int	*ptr;
 
+// 	saluti = 153;
+
+// 	ptr = &saluti;
+
+// 	printf("questi sono %d caratteri:",(ft_printf("Io sono un int %i\n", 4)));
+// 	printf("Io sono un int %i\n", 4);
+// 	ft_printf("Io sono un int negativo %i\n", -213);
+// 	printf("Io sono un int negativo %i\n", -213);
+// 	ft_printf("Io sono un esadecimale in caps %X\n", 543215324);
+// 	printf("Io sono un esadecimale in caps %X\n", 543215324);
+// 	ft_printf("Io sono un esadecimale %x\n", 543215324);
+// 	printf("Io sono un esadecimale %x\n", 543215324);
+// 	ft_printf("Io sono un percento %%\n");
+// 	printf("Io sono un percento %%\n");
+// 	ft_printf ("Io sono un puntatore %p\n", ptr);
+// 	printf ("Io sono un puntatore %p\n", ptr);
+// 	//ft_printf("Io sono tante stringhe %s %s\n", "banana", "fragola");
+// 	//printf("Io sono tante stringhe %s %s\n", "banana", "fragola");
+//	printf("questi sono %d caratteri\n", printf("Io sono tante
+//stringhe %s %s\n", "banana", "fragola"));
+// 	ft_printf("questi sono %d caratteri\n", printf("Io sono tante
+//stringhe %s %s\n", "banana", "fragola"));
+// 	return (0);
+// }
