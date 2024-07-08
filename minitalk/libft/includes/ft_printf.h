@@ -6,7 +6,7 @@
 /*   By: fabnenci <fabnenci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 18:19:09 by fabnenci          #+#    #+#             */
-/*   Updated: 2024/04/09 16:33:33 by fabnenci         ###   ########.fr       */
+/*   Updated: 2024/07/08 22:51:14 by fabnenci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stdarg.h>
 # include <stdint.h>
 # include <unistd.h>
+# include "libft.h"
 
 # define BASE16 "0123456789abcdef"
 # define BASE16CAPS "0123456789ABCDEF"

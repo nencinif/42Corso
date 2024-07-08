@@ -6,7 +6,7 @@
 /*   By: fabnenci <fabnenci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 17:36:06 by fabnenci          #+#    #+#             */
-/*   Updated: 2024/04/09 16:59:06 by fabnenci         ###   ########.fr       */
+/*   Updated: 2024/07/08 22:57:17 by fabnenci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <limits.h>
 #include <stdarg.h>
 #include <stdint.h>
+# include "libft.h"
 
 static int	formatchecker(char c, va_list list)
 {
@@ -23,13 +24,13 @@ static int	formatchecker(char c, va_list list)
 
 	ccount = 0;
 	if (c == '%')
-		ccount = ft_putchar('%');
+		ccount = ft_putchar_fd('%', 1);
 	else if (c == 'c')
-		ccount = ft_putchar(va_arg(list, int));
+		ccount = ft_putchar_fd(va_arg(list, int), 1);
 	else if (c == 'i' || c == 'd')
-		ccount = ft_putnbr(va_arg(list, int));
+		ccount = ft_putnbr_fd(va_arg(list, int), 1);
 	else if (c == 's')
-		ccount = ft_putstr(va_arg(list, char *));
+		ccount = ft_putstr_fd(va_arg(list, char *), 1);
 	else if (c == 'u')
 		ccount = ft_putnbr_base(va_arg(list, unsigned int), BASE10);
 	else if (c == 'p')

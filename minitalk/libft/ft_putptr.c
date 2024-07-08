@@ -1,37 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_putptr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fabnenci <fabnenci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/18 19:03:56 by fabnenci          #+#    #+#             */
-/*   Updated: 2024/07/08 22:39:34 by fabnenci         ###   ########.fr       */
+/*   Created: 2024/07/08 22:14:33 by fabnenci          #+#    #+#             */
+/*   Updated: 2024/07/08 22:47:47 by fabnenci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int ft_putstr_fd(char *s, int fd)
+int	ft_putptr(uintptr_t ptr)
 {
-    int count = 0;
-    if (s)
-    {
-        while (*s)
-        {
-            write(fd, s, 1);
-            s++;
-            count++;
-        }
-    }
-    return count;
-}
+	int	count;
 
-/*
-int	main()
-{
-	char str[7] = "banana";
-
-	ft_putstr_fd(str, 1);
+	count = 0;
+	if (!ptr)
+	{
+		count += ft_putstr_fd("(nil)", 1);
+	}
+	else
+	{
+		count = count + ft_putstr_fd("0x", 1);
+		count = count + ft_putnbr_base(ptr, BASE16);
+	}
+	return (count);
 }
-*/

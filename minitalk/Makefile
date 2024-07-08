@@ -13,15 +13,13 @@ $(NAME): $(SRCS)
 	@make -C ./libft/
 	@$(CC) $(CFLAGS) $(INC) -o $(NAME) server.c -Llibft -lft
 	@$(CC) $(CFLAGS) $(INC) -o $(CLIENT) client.c -Llibft -lft
-	@$(MAKE) luna
-
+	
 clean:
 	@make clean -C ./libft
 
 fclean: clean
 	@make fclean -C ./libft
 	@$(RM) $(NAME) $(CLIENT)
-	@$(MAKE) luna
 
 re: fclean all
 
