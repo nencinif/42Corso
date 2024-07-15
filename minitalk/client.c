@@ -6,7 +6,7 @@
 /*   By: fabnenci <fabnenci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 12:51:00 by fabnenci          #+#    #+#             */
-/*   Updated: 2024/07/09 17:26:44 by fabnenci         ###   ########.fr       */
+/*   Updated: 2024/07/15 14:06:09 by fabnenci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	send_char(int pid, char c)
 			kill(pid, SIGUSR1);
 		else
 			kill(pid, SIGUSR2);
-		usleep(150);
+		usleep(250);
 		bit++;
 	}
 }
